@@ -5,7 +5,7 @@ import java.util.List;
 public class Question {
     public final String categoryId;
     public final String instructionText;
-    /** عنصر السؤال الأصلي (Letter / ShapeItem / AnimalItem) لعرضه في الأعلى. */
+    /** عنصر السؤال الأصلي (WordItem / AnimalItem) لعرضه في الأعلى. */
     public final Object subjectItem;
     public final List<Option> options;
 

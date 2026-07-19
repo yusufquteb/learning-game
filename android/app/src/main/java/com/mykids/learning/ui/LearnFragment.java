@@ -1,5 +1,6 @@
 package com.mykids.learning.ui;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,8 +22,9 @@ import com.mykids.learning.R;
 import com.mykids.learning.data.AnimalItem;
 import com.mykids.learning.data.Category;
 import com.mykids.learning.data.GameData;
-import com.mykids.learning.data.Letter;
-import com.mykids.learning.data.ShapeItem;
+import com.mykids.learning.data.WordItem;
+import com.mykids.learning.util.AssetAudioPlayer;
+import com.mykids.learning.util.AssetImageLoader;
 import com.mykids.learning.util.SpeechUtil;
 
 import java.util.List;
@@ -89,38 +91,60 @@ public class LearnFragment extends Fragment {
 
     private void renderCard(View root, Category cat, List<Object> items) {
         Object item = items.get(currentIndex);
+        MainActivity activity = (MainActivity) requireActivity();
 
-        TextView bigLetter = root.findViewById(R.id.bigLetter);
-        TextView subName = root.findViewById(R.id.subName);
         ImageView shapeImage = root.findViewById(R.id.shapeImage);
         TextView bigEmoji = root.findViewById(R.id.bigEmoji);
         TextView mainWord = root.findViewById(R.id.mainWord);
         TextView factText = root.findViewById(R.id.factText);
+        View pairedRow = root.findViewById(R.id.pairedRow);
+        ImageView pairedImage = root.findViewById(R.id.pairedImage);
+        TextView pairedText = root.findViewById(R.id.pairedText);
+        TextView speakButton = root.findViewById(R.id.speakButton);
+        TextView speakEnButton = root.findViewById(R.id.speakEnButton);
+        TextView soundEffectButton = root.findViewById(R.id.soundEffectButton);
 
-        bigLetter.setVisibility(View.GONE);
-        subName.setVisibility(View.GONE);
         shapeImage.setVisibility(View.GONE);
         bigEmoji.setVisibility(View.GONE);
         factText.setVisibility(View.GONE);
+        pairedRow.setVisibility(View.GONE);
+        speakEnButton.setVisibility(View.GONE);
+        soundEffectButton.setVisibility(View.GONE);
 
-        String speakText;
+        AssetAudioPlayer audioPlayer = activity.getAssetAudioPlayer();
 
-        if (item instanceof Letter) {
-            Letter l = (Letter) item;
-            bigLetter.setText(l.letter);
-            bigLetter.setVisibility(View.VISIBLE);
-            subName.setText(l.name);
-            subName.setVisibility(View.VISIBLE);
-            bigEmoji.setText(l.emoji);
-            bigEmoji.setVisibility(View.VISIBLE);
-            mainWord.setText(l.word);
-            speakText = l.name + "، " + l.word;
-        } else if (item instanceof ShapeItem) {
-            ShapeItem s = (ShapeItem) item;
-            shapeImage.setImageResource(s.drawableRes);
+        if (item instanceof WordItem) {
+            WordItem w = (WordItem) item;
+
+            Bitmap bitmap = AssetImageLoader.load(requireContext(), w.imageAssetPath);
+            shapeImage.setImageBitmap(bitmap);
             shapeImage.setVisibility(View.VISIBLE);
-            mainWord.setText(s.name);
-            speakText = s.name;
+            mainWord.setText(w.nameAr);
+
+            if (w.caption != null) {
+                factText.setText(w.caption);
+                factText.setVisibility(View.VISIBLE);
+            }
+
+            if (w.pairedLabel != null) {
+                pairedText.setText(w.pairedLabel);
+                if (w.pairedImageAssetPath != null) {
+                    pairedImage.setImageBitmap(AssetImageLoader.load(requireContext(), w.pairedImageAssetPath));
+                }
+                pairedRow.setVisibility(View.VISIBLE);
+            }
+
+            speakButton.setOnClickListener(v -> audioPlayer.play(w.soundArAssetPath));
+
+            if (w.soundEnAssetPath != null) {
+                speakEnButton.setVisibility(View.VISIBLE);
+                speakEnButton.setOnClickListener(v -> audioPlayer.play(w.soundEnAssetPath));
+            }
+
+            if (w.soundEffectAssetPath != null) {
+                soundEffectButton.setVisibility(View.VISIBLE);
+                soundEffectButton.setOnClickListener(v -> audioPlayer.play(w.soundEffectAssetPath));
+            }
         } else {
             AnimalItem a = (AnimalItem) item;
             bigEmoji.setText(a.emoji);
@@ -128,12 +152,11 @@ public class LearnFragment extends Fragment {
             mainWord.setText(a.name);
             factText.setText(a.fact);
             factText.setVisibility(View.VISIBLE);
-            speakText = a.name + "، " + a.fact;
-        }
 
-        SpeechUtil speechUtil = ((MainActivity) requireActivity()).getSpeechUtil();
-        String finalSpeakText = speakText;
-        root.findViewById(R.id.speakButton).setOnClickListener(v -> speechUtil.speak(finalSpeakText));
+            SpeechUtil speechUtil = activity.getSpeechUtil();
+            String speakText = a.name + "، " + a.fact;
+            speakButton.setOnClickListener(v -> speechUtil.speak(speakText));
+        }
 
         ProgressBar progressBar = root.findViewById(R.id.learnProgress);
         progressBar.setProgress((int) (((currentIndex + 1) / (float) items.size()) * 100));

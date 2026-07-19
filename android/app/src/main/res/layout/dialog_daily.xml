@@ -34,19 +34,12 @@
             android:gravity="center"
             android:layout_marginBottom="12dp" />
 
-        <TextView
-            android:id="@+id/dialogSubjectLetter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="64sp"
-            android:textStyle="bold"
-            android:textColor="@color/blue"
-            android:visibility="gone" />
-
         <ImageView
             android:id="@+id/dialogSubjectShape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxHeight="120dp"
             android:visibility="gone" />
 
         <TextView

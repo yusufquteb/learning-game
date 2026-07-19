@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.mykids.learning.progress.ProgressManager;
 import com.mykids.learning.ui.HomeFragment;
 import com.mykids.learning.ui.WelcomeFragment;
+import com.mykids.learning.util.AssetAudioPlayer;
 import com.mykids.learning.util.LocaleHelper;
 import com.mykids.learning.util.SoundUtil;
 import com.mykids.learning.util.SpeechUtil;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressManager progressManager;
     private SpeechUtil speechUtil;
     private SoundUtil soundUtil;
+    private AssetAudioPlayer assetAudioPlayer;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         progressManager = new ProgressManager(this);
         speechUtil = new SpeechUtil(this);
         soundUtil = new SoundUtil();
+        assetAudioPlayer = new AssetAudioPlayer(this);
 
         if (savedInstanceState == null) {
             Fragment start = progressManager.getName().isEmpty()
@@ -57,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
     public SoundUtil getSoundUtil() {
         return soundUtil;
+    }
+
+    public AssetAudioPlayer getAssetAudioPlayer() {
+        return assetAudioPlayer;
     }
 
     /** يعرض شاشة جديدة فوق المكدس (يمكن الرجوع عنها بزر الرجوع). */
@@ -93,5 +100,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         if (speechUtil != null) speechUtil.shutdown();
         if (soundUtil != null) soundUtil.release();
+        if (assetAudioPlayer != null) assetAudioPlayer.stop();
     }
 }

@@ -18,8 +18,7 @@ import com.mykids.learning.R;
 import com.mykids.learning.data.AnimalItem;
 import com.mykids.learning.data.Category;
 import com.mykids.learning.data.GameData;
-import com.mykids.learning.data.Letter;
-import com.mykids.learning.data.ShapeItem;
+import com.mykids.learning.data.WordItem;
 import com.mykids.learning.progress.ProgressManager;
 
 import java.util.List;
@@ -100,12 +99,12 @@ public class PathFragment extends Fragment {
     }
 
     private String stageLabel(Category cat, List<Object> items) {
+        boolean isLetters = cat.id.equals(GameData.CAT_LETTERS_AR) || cat.id.equals(GameData.CAT_LETTERS_EN);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
             Object item = items.get(i);
-            if (i > 0) sb.append(cat.id.equals(GameData.CAT_LETTERS) ? "  " : "  ·  ");
-            if (item instanceof Letter) sb.append(((Letter) item).letter);
-            else if (item instanceof ShapeItem) sb.append(((ShapeItem) item).name);
+            if (i > 0) sb.append(isLetters ? "  " : "  ·  ");
+            if (item instanceof WordItem) sb.append(((WordItem) item).nameAr);
             else if (item instanceof AnimalItem) sb.append(((AnimalItem) item).name);
         }
         return sb.toString();

@@ -18,7 +18,6 @@ import com.mykids.learning.R;
 import com.mykids.learning.data.Category;
 import com.mykids.learning.data.GameData;
 import com.mykids.learning.progress.ProgressManager;
-import com.mykids.learning.util.QuizGenerator;
 
 public class HomeFragment extends Fragment {
 

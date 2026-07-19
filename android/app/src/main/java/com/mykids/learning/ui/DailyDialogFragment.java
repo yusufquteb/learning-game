@@ -20,11 +20,11 @@ import com.mykids.learning.MainActivity;
 import com.mykids.learning.R;
 import com.mykids.learning.data.AnimalItem;
 import com.mykids.learning.data.Category;
-import com.mykids.learning.data.Letter;
-import com.mykids.learning.data.ShapeItem;
+import com.mykids.learning.data.WordItem;
 import com.mykids.learning.model.Option;
 import com.mykids.learning.model.Question;
 import com.mykids.learning.progress.ProgressManager;
+import com.mykids.learning.util.AssetImageLoader;
 import com.mykids.learning.util.QuizGenerator;
 import com.mykids.learning.util.SoundUtil;
 
@@ -65,15 +65,12 @@ public class DailyDialogFragment extends DialogFragment {
 
         ((TextView) view.findViewById(R.id.dialogInstruction)).setText(q.instructionText);
 
-        TextView subjectLetter = view.findViewById(R.id.dialogSubjectLetter);
         ImageView subjectShape = view.findViewById(R.id.dialogSubjectShape);
         TextView subjectEmoji = view.findViewById(R.id.dialogSubjectEmoji);
 
-        if (q.subjectItem instanceof Letter) {
-            subjectLetter.setText(((Letter) q.subjectItem).letter);
-            subjectLetter.setVisibility(View.VISIBLE);
-        } else if (q.subjectItem instanceof ShapeItem) {
-            subjectShape.setImageResource(((ShapeItem) q.subjectItem).drawableRes);
+        if (q.subjectItem instanceof WordItem) {
+            WordItem w = (WordItem) q.subjectItem;
+            subjectShape.setImageBitmap(AssetImageLoader.load(requireContext(), w.imageAssetPath));
             subjectShape.setVisibility(View.VISIBLE);
         } else if (q.subjectItem instanceof AnimalItem) {
             subjectEmoji.setText(((AnimalItem) q.subjectItem).emoji);
