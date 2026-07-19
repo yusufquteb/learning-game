@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.LearningGame" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blue</item>
+        <item name="colorAccent">@color/orange</item>
+        <item name="android:windowBackground">@color/sky_top</item>
+        <item name="android:statusBarColor">@color/sky_top</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+</resources>
