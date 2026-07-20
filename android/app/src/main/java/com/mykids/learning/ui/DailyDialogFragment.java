@@ -91,7 +91,8 @@ public class DailyDialogFragment extends DialogFragment {
             } else {
                 emoji.setVisibility(View.GONE);
             }
-            optView.setOnClickListener(v -> onAnswer(optionsContainer, q, i));
+            final int idx = i;
+            optView.setOnClickListener(v -> onAnswer(optionsContainer, q, idx));
             optionsContainer.addView(optView);
         }
 

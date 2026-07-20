@@ -32,7 +32,7 @@ public final class QuizGenerator {
     public static Question buildQuestion(Category cat, Object item) {
         if (item instanceof WordItem) {
             WordItem target = (WordItem) item;
-            List<WordItem> distractors = sample(cat.items, 2, w -> ((WordItem) w).key.equals(target.key));
+            List<Object> distractors = sample(cat.items, 2, w -> ((WordItem) w).key.equals(target.key));
             List<WordItem> shuffled = new ArrayList<>();
             shuffled.add(target);
             for (Object d : distractors) shuffled.add((WordItem) d);
