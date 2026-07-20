@@ -47,19 +47,12 @@
             android:gravity="center"
             android:layout_marginBottom="14dp" />
 
-        <TextView
-            android:id="@+id/subjectLetter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="80sp"
-            android:textStyle="bold"
-            android:textColor="@color/blue"
-            android:visibility="gone" />
-
         <ImageView
             android:id="@+id/subjectShape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxHeight="140dp"
             android:visibility="gone" />
 
         <TextView

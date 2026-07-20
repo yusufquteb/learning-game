@@ -1,0 +1,1 @@
+{"arrow":"ARROW","circle":"CIRCLE","crescent":"CRESCENT","diamond":"DIAMOND","heart":"HEART","oval":"OVAL","rectangle":"RECTANGLE","square":"SQUARE","star":"STAR","triangle":"TRIANGLE"}

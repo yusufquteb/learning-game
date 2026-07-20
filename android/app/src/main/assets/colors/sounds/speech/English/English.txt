@@ -1,0 +1,1 @@
+{"black":"BLACK","blue":"BLUE","brown":"BROWN","green":"GREEN","grey":"GREY","orange":"ORANGE","pink":"PINK","red":"RED","violet":"VIOLET","white":"WHITE","yellow":"YELLOW"}

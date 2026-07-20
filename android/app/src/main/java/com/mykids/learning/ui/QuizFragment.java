@@ -20,11 +20,11 @@ import com.mykids.learning.R;
 import com.mykids.learning.data.AnimalItem;
 import com.mykids.learning.data.Category;
 import com.mykids.learning.data.GameData;
-import com.mykids.learning.data.Letter;
-import com.mykids.learning.data.ShapeItem;
+import com.mykids.learning.data.WordItem;
 import com.mykids.learning.model.Option;
 import com.mykids.learning.model.Question;
 import com.mykids.learning.progress.ProgressManager;
+import com.mykids.learning.util.AssetImageLoader;
 import com.mykids.learning.util.QuizGenerator;
 import com.mykids.learning.util.SoundUtil;
 
@@ -72,24 +72,19 @@ public class QuizFragment extends Fragment {
     }
 
     private void renderQuestion(View root, Category cat, String categoryId, int stageIndex) {
-        MainActivity activity = (MainActivity) requireActivity();
         Question q = questions.get(currentIndex);
         answered = false;
 
         ((TextView) root.findViewById(R.id.quizInstruction)).setText(q.instructionText);
 
-        TextView subjectLetter = root.findViewById(R.id.subjectLetter);
         ImageView subjectShape = root.findViewById(R.id.subjectShape);
         TextView subjectEmoji = root.findViewById(R.id.subjectEmoji);
-        subjectLetter.setVisibility(View.GONE);
         subjectShape.setVisibility(View.GONE);
         subjectEmoji.setVisibility(View.GONE);
 
-        if (q.subjectItem instanceof Letter) {
-            subjectLetter.setText(((Letter) q.subjectItem).letter);
-            subjectLetter.setVisibility(View.VISIBLE);
-        } else if (q.subjectItem instanceof ShapeItem) {
-            subjectShape.setImageResource(((ShapeItem) q.subjectItem).drawableRes);
+        if (q.subjectItem instanceof WordItem) {
+            WordItem w = (WordItem) q.subjectItem;
+            subjectShape.setImageBitmap(AssetImageLoader.load(requireContext(), w.imageAssetPath));
             subjectShape.setVisibility(View.VISIBLE);
         } else if (q.subjectItem instanceof AnimalItem) {
             subjectEmoji.setText(((AnimalItem) q.subjectItem).emoji);
